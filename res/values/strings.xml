@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Global -->
+	<string name="app_name">Tile Map Editor</string>
+	<string name="global_menu_info">About…</string>
+	<string name="global_menu_settings">Settings</string>
+	<!-- HomeActivity -->
+	<string name="home_menu_new">New map</string>
+	<string name="home_dlg_new_rows">Rows</string>
+	<string name="home_dlg_new_columns">Columns</string>
+	<string name="home_dlg_new_canceled">Canceled creation of map</string>
+	<string name="home_dlg_loading_maps">Loading maps. Please wait…</string>
+	<string name="home_grid_item_thumb_cd">Thumbnail</string>
+	<string name="home_grid_empty">There are no saved maps. Tap the button to create a new map</string>
+	<string name="home_ctx_menu_delete">Delete map</string>
+	<string name="home_ctx_menu_edit">Edit map</string>
+	<!-- TiledMapActivity -->
+	<string name="tiledMap_menu_save">Save to SD</string>
+	<string name="tiledMap_menu_share">Share image</string>
+	<string name="tiledMap_menu_rename">Rename…</string>
+	<string name="tiledMap_chooser_share">Share through…</string>
+	<string name="tiledMap_export_dlg_message">Preparing image…</string>
+	<string name="tiledMap_export_save_success">Image saved to the SD card: %1$s.</string>
+	<string name="tiledMap_export_ioerror">Error while preparing image: %1$s.</string>
+	<string name="tiledMap_export_oom">Out of memory while preparing image!</string>
+	<string name="tiledMap_dlg_confirmSave_title">Save changes?</string>
+	<string name="tiledMap_dlg_confirmSave_message">Do you want to save the changes you made to the map?</string>
+	<string name="tiledMap_dlg_confirmSave_positive">Save</string>
+	<string name="tiledMap_dlg_confirmSave_negative">Discard</string>
+	<string name="tiledMap_dlg_renameMap_message">Enter a name for the map, or leave it as it is.</string>
+	<string name="tiledMap_dlg_renameMap_noName">Unnamed map</string>
+	<string name="tiledMap_ctx_menu_delete">Remove tile</string>
+	<!-- About screen -->
+	<string name="tab_info">About</string>
+	<string name="tab_changelog">Changelog</string>
+	<string name="tab_license">License</string>
+	<string name="about_info_version">version %1$s</string>
+	<string name="about_info_author">Author: Luca Santarelli</string>
+	<string name="about_info_homepage"></string>
+	<string name="about_info_extra">Multitouch Controller [http://code.google.com/p/android-multitouch-controller]\nNumberPicker [https://github.com/novak/numpicker-demo]\nColor Picker Preference [https://github.com/attenzione/android-ColorPickerPreference]</string>
+	<string name="about_info_questions">If you have any questions, please contact the author by email or using the homepage.</string>
+	<string name="about_info_thanks">Thanks to every user who helped shape up this app!</string>
+	<!-- Settings -->
+	<string name="prefs_map_show_grid_summary_off">Grid will not be displayed</string>
+	<string name="prefs_map_show_grid_summary_on">Grid will be displayed</string>
+	<string name="prefs_map_show_grid">Display grid</string>
+	<string name="prefs_export_show_grid_summary_off">Grid will not be displayed</string>
+	<string name="prefs_export_show_grid_summary_on">Grid will be displayed</string>
+	<string name="prefs_export_show_grid">Display grid when exporting</string>
+	<string name="prefs_map_color_empty_tile_title">Map background color</string>
+	<string name="prefs_map_color_empty_tile_summary">Color used for empty tiles</string>
+
+</resources>

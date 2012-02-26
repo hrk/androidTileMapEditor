@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+
+	<!--
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:orientation="vertical" >
+	-->
+
+	<TableLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal|center_vertical"
+		android:orientation="horizontal" >
+
+		<TableRow
+			android:gravity="center_horizontal|center_vertical"
+			android:padding="5dip" >
+
+			<TextView
+				style="@android:style/TextAppearance.Medium"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:text="@string/home_dlg_new_rows" />
+
+			<TextView
+				style="@android:style/TextAppearance.Medium"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal" />
+
+			<TextView
+				style="@android:style/TextAppearance.Medium"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:text="@string/home_dlg_new_columns" />
+		</TableRow>
+
+		<TableRow
+			android:gravity="center_horizontal|center_vertical"
+			android:padding="5dip" >
+
+			<com.quietlycoding.android.picker.NumberPicker
+				android:id="@+id/home_dlg_rows"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+
+			<TextView
+				style="@android:style/TextAppearance.Medium"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/home_dlg_new_x" />
+
+			<com.quietlycoding.android.picker.NumberPicker
+				android:id="@+id/home_dlg_columns"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+		</TableRow>
+	</TableLayout>
+	<!-- </LinearLayout> -->
+
+</ScrollView>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item
+		android:id="@+id/home_menu_new"
+		android:icon="@android:drawable/ic_menu_add"
+		android:showAsAction="always"
+		android:title="@string/home_menu_new"/>
+	<item
+		android:id="@+id/global_menu_settings"
+		android:icon="@android:drawable/ic_menu_preferences"
+		android:showAsAction="ifRoom"
+		android:title="@string/global_menu_settings"/>
+	<item
+		android:id="@+id/global_menu_info"
+		android:icon="@android:drawable/ic_menu_info_details"
+		android:showAsAction="never"
+		android:title="@string/global_menu_info"/>
+
+</menu>

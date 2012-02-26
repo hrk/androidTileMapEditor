@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="sql_ddl_create">CREATE TABLE t_map(
+		_id INTEGER PRIMARY KEY AUTOINCREMENT
+		, _last_update INTEGER NOT NULL
+		, _name TEXT NOT NULL
+		, _json_data TEXT NOT NULL
+		);</string>
+	<string name="home_dlg_new_x">×</string>
+
+</resources>

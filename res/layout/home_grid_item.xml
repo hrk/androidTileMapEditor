@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:orientation="vertical" >
+
+	<ImageView
+		android:id="@+id/home_grid_item_thumb"
+		android:layout_width="@dimen/tiledMap_tile"
+		android:layout_height="@dimen/tiledMap_tile"
+		android:contentDescription="@string/home_grid_item_thumb_cd"
+		android:scaleType="fitCenter" />
+
+	<TextView
+		android:id="@+id/home_grid_item_name"
+		style="@android:style/TextAppearance.Medium"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/app_name"
+		android:textColor="@android:color/primary_text_dark"
+		android:textSize="@dimen/home_grid_item_name" />
+
+	<TextView
+		android:id="@+id/home_grid_item_date"
+		style="@android:style/TextAppearance.Small"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/app_name"
+		android:textColor="@android:color/primary_text_dark"
+		android:textSize="@dimen/home_grid_item_date" />
+
+</LinearLayout>

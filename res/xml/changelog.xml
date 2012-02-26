@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+	<release date="2012-02-25" version="1.1">
+		<change>New: support for saving and later editing of maps</change>
+		<change>New: settings screen (display grid while editing, display grid while exporting, background color for empty tiles, …)</change>
+		<change>New: display map thumbnail, name, and last update time in home screen</change>
+		<change>New: rename maps</change>
+	</release>
+	<release date="2012-02-12" version="1.0">
+		<change>Initial release</change>
+	</release>
+</changelog>
+

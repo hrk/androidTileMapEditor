@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<dimen name="selectDialog_grid_tile">78dp</dimen>
+	<dimen name="tiledMap_tile">150dp</dimen>
+	<dimen name="home_grid_item_name">16dp</dimen>
+	<dimen name="home_grid_item_date">11dp</dimen>
+
+</resources>

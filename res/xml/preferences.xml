@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<CheckBoxPreference
+		android:defaultValue="true"
+		android:key="map_show_grid"
+		android:persistent="true"
+		android:summaryOff="@string/prefs_map_show_grid_summary_off"
+		android:summaryOn="@string/prefs_map_show_grid_summary_on"
+		android:title="@string/prefs_map_show_grid" />
+	<CheckBoxPreference
+		android:defaultValue="true"
+		android:key="export_show_grid"
+		android:persistent="true"
+		android:summaryOff="@string/prefs_export_show_grid_summary_off"
+		android:summaryOn="@string/prefs_export_show_grid_summary_on"
+		android:title="@string/prefs_export_show_grid" />
+
+	<net.margaritov.preference.colorpicker.ColorPickerPreference
+		alphaSlider="true"
+		android:defaultValue="0xff444444"
+		android:key="map_color_empty_tile"
+		android:summary="@string/prefs_map_color_empty_tile_summary"
+		android:title="@string/prefs_map_color_empty_tile_title" />
+
+</PreferenceScreen>
