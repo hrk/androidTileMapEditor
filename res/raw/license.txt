@@ -11,9 +11,13 @@ Url: https://github.com/novak/numpicker-demo
 License: APACHE 2.0
 
 [Multitouch Controller]
-Url: http://code.google.com/p/android-multitouch-controller/
+Url: http://code.google.com/p/android-multitouch-controller
 License: APACHE 2.0
 
 [ColorPickerPreference]
 Url: https://github.com/attenzione/android-ColorPickerPreference
+License: APACHE 2.0
+
+[ActionBarSherlock]
+Url: http://www.actionbarsherlock.com
 License: APACHE 2.0

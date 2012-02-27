@@ -34,7 +34,6 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,8 +96,7 @@ public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cu
 		registerForContextMenu(gvPreview);
 
 		// showDialog(C.DIALOG_LOADING_MAPS);
-		progressDialog = ProgressDialog.show(HomeActivity.this, null,
-		 getString(R.string.home_dlg_loading_maps), true);
+		progressDialog = ProgressDialog.show(HomeActivity.this, null, getString(R.string.home_dlg_loading_maps), true);
 	}
 
 	/*
@@ -176,8 +174,8 @@ public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cu
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.home, menu);
 		return true;
 	}
@@ -231,7 +229,7 @@ public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cu
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.global_menu_info: {
 				Intent aboutActivity = new Intent(HomeActivity.this, AboutActivity.class);

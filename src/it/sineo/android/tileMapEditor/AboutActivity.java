@@ -23,114 +23,149 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import android.app.TabActivity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TextView;
 
-public class AboutActivity extends  TabActivity implements TabContentFactory {
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
+public class AboutActivity extends SherlockActivity implements TabContentFactory, TabListener {
+
+	@SuppressWarnings("unused")
+	private final static String TAG = AboutActivity.class.getSimpleName();
 
 	private final static String TAG_INFO = "info";
 	private final static String TAG_CHANGELOG = "changelog";
-	// private final static String TAG_FAQ = "faq";
 	private final static String TAG_LICENSE = "license";
+
+	private View tabInfo, tabChangelog, tabLicense;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 
-		TabHost.TabSpec tab = getTabHost().newTabSpec(TAG_INFO);
-		tab.setIndicator(getString(R.string.tab_info));
-		tab.setContent(this); // Fixed.
-		getTabHost().addTab(tab);
+		/* Action bar navigation */
+		ActionBar bar = getSupportActionBar();
+		bar.setHomeButtonEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(true);
 
-		tab = getTabHost().newTabSpec(TAG_CHANGELOG);
-		tab.setIndicator(getString(R.string.tab_changelog));
-		tab.setContent(this); // Dynamic.
-		getTabHost().addTab(tab);
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		tab = getTabHost().newTabSpec(TAG_LICENSE);
-		tab.setIndicator(getString(R.string.tab_license));
-		tab.setContent(this); // Dynamic.
-		getTabHost().addTab(tab);
+		ActionBar.Tab tab = bar.newTab();
+		tab.setText(R.string.tab_info);
+		tab.setTag(TAG_INFO);
+		tab.setTabListener(this);
+		bar.addTab(tab, true);
 
-		getTabHost().setCurrentTab(0);
+		tab = bar.newTab();
+		tab.setText(R.string.tab_changelog);
+		tab.setTag(TAG_CHANGELOG);
+		tab.setTabListener(this);
+		bar.addTab(tab);
+
+		tab = bar.newTab();
+		tab.setText(R.string.tab_license);
+		tab.setTag(TAG_LICENSE);
+		tab.setTabListener(this);
+		bar.addTab(tab);
 	}
 
 	public View createTabContent(String tag) {
 		if (TAG_INFO.equals(tag)) {
-			LayoutInflater li = LayoutInflater.from(this);
-			View v = li.inflate(R.layout.about_info, null);
+			if (tabInfo == null) {
+				LayoutInflater li = LayoutInflater.from(this);
+				View v = li.inflate(R.layout.about_info, null);
 
-			String version = "?";
-			try {
-				PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
-				version = info.versionName;
-			} catch (PackageManager.NameNotFoundException pmnnfex) {
-				pmnnfex.printStackTrace();
-			}
-			((TextView) v.findViewById(R.id.about_info_version)).setText(getResources().getString(
-					R.string.about_info_version, version));
-			Linkify.addLinks((TextView) v.findViewById(R.id.about_info_author), Linkify.ALL);
-			Linkify.addLinks((TextView) v.findViewById(R.id.about_info_homepage), Linkify.ALL);
-			Linkify.addLinks((TextView) v.findViewById(R.id.about_info_extra), Linkify.ALL);
-			final ImageView icon = (ImageView) v.findViewById(R.id.about_info_icon);
-			icon.setOnTouchListener(new View.OnTouchListener() {
-				public boolean onTouch(View v, MotionEvent event) {
-					String tag = (String) icon.getTag();
-					if (tag == null || "new".equals(tag)) {
-						icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_hrk));
-						icon.setTag("old");
-					} else {
-						icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
-						icon.setTag("new");
-					}
-					return false;
+				String version = "?";
+				try {
+					PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+					version = info.versionName;
+				} catch (PackageManager.NameNotFoundException pmnnfex) {
+					pmnnfex.printStackTrace();
 				}
-			});
+				((TextView) v.findViewById(R.id.about_info_version)).setText(getResources().getString(
+						R.string.about_info_version, version));
+				Linkify.addLinks((TextView) v.findViewById(R.id.about_info_author), Linkify.ALL);
+				// Linkify.addLinks((TextView) v.findViewById(R.id.about_info_homepage), Linkify.ALL);
+				Linkify.addLinks((TextView) v.findViewById(R.id.about_info_extra), Linkify.ALL);
 
-			return v;
+				tabInfo = v;
+			}
+			return tabInfo;
 		} else if (TAG_CHANGELOG.equals(tag)) {
-			return ChangelogFactory.inflate(this, R.xml.changelog);
-			// } else if (TAG_FAQ.equals(tag)) {
-			// LayoutInflater li = LayoutInflater.from(this);
-			// View v = li.inflate(R.layout.about_faq, null);
-			// Linkify.addLinks((TextView) v.findViewById(R.id.about_faq_governors),
-			// Linkify.ALL);
-			// Linkify.addLinks((TextView) v.findViewById(R.id.about_faq_profiles),
-			// Linkify.ALL);
-			//
-			// return v;
-		} else if (TAG_LICENSE.equals(tag)) {
-			String text = "";
-			try {
-				InputStream is = getResources().openRawResource(R.raw.license);
-				BufferedReader br = new BufferedReader(new InputStreamReader(is), 4096);
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					text += line + "\r\n";
-				}
-				br.close();
-				is.close();
-			} catch (IOException ioex) {
-				text = ioex.getLocalizedMessage();
+			if (tabChangelog == null) {
+				tabChangelog = ChangelogFactory.inflate(this, R.xml.changelog);
 			}
-			LayoutInflater li = LayoutInflater.from(this);
-			View v = li.inflate(R.layout.about_license, null);
-			((TextView) v.findViewById(R.id.about_license)).setText(text);
-			return v;
+			return tabChangelog;
+		} else if (TAG_LICENSE.equals(tag)) {
+			if (tabLicense == null) {
+				String text = "";
+				try {
+					InputStream is = getResources().openRawResource(R.raw.license);
+					BufferedReader br = new BufferedReader(new InputStreamReader(is), 4096);
+					String line = null;
+					while ((line = br.readLine()) != null) {
+						text += line + "\r\n";
+					}
+					br.close();
+					is.close();
+				} catch (IOException ioex) {
+					text = ioex.getLocalizedMessage();
+				}
+				LayoutInflater li = LayoutInflater.from(this);
+				View v = li.inflate(R.layout.about_license, null);
+				TextView license = (TextView) v.findViewById(R.id.about_license);
+				license.setText(text);
+				Linkify.addLinks(license, Linkify.WEB_URLS);
+				tabLicense = v;
+			}
+			return tabLicense;
 		}
 		Log.e(getClass().getName(), "unknown tag: " + tag);
 		return null;
+	}
+
+	@Override
+	public void onTabSelected(Tab tab) {
+		String tag = tab.getTag().toString();
+		setContentView(createTabContent(tag));
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab) {
+		// Do nothing.
+	}
+
+	@Override
+	public void onTabReselected(Tab tab) {
+		String tag = tab.getTag().toString();
+		setContentView(createTabContent(tag));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home: {
+				Intent intent = new Intent(this, HomeActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				return true;
+			}
+			default: {
+				return super.onOptionsItemSelected(item);
+			}
+		}
 	}
 }

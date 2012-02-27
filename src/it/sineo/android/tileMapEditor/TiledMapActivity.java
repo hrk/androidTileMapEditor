@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -45,7 +46,10 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
-public class TiledMapActivity extends Activity implements DialogInterface.OnClickListener {
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+
+public class TiledMapActivity extends FragmentActivity implements DialogInterface.OnClickListener {
 	private static final String TAG = "TiledMapActivity";
 
 	TiledMapView view = null;
@@ -61,6 +65,12 @@ public class TiledMapActivity extends Activity implements DialogInterface.OnClic
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tilemap);
+
+		/* Action bar navigation */
+		ActionBar bar = getSupportActionBar();
+		bar.setHomeButtonEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(true);
+
 		view = (TiledMapView) findViewById(R.id.tiledmap);
 		view.setOnShortPressListener(shortPressListener);
 		view.setOnLongPressListener(longPressListener);
@@ -73,6 +83,7 @@ public class TiledMapActivity extends Activity implements DialogInterface.OnClic
 		if (i.hasExtra(C.EXTRA_MAP_ID)) {
 			mapId = i.getLongExtra(C.EXTRA_MAP_ID, -1);
 			view.restoreFromJSON(i.getStringExtra(C.EXTRA_MAP_JSON));
+			getSupportActionBar().setTitle(view.getMapName());
 		} else {
 			int rows = i.getIntExtra(C.EXTRA_MAP_ROWS, -1);
 			int columns = i.getIntExtra(C.EXTRA_MAP_COLUMNS, -1);
@@ -144,10 +155,13 @@ public class TiledMapActivity extends Activity implements DialogInterface.OnClic
 			}
 			if (which == DialogInterface.BUTTON_POSITIVE) {
 				view.renameMap(mapName);
+				getSupportActionBar().setTitle(mapName);
 			} else if (which == DialogInterface.BUTTON_NEGATIVE
 					&& (view.getMapName() == null || view.getMapName().trim().length() == 0)) {
 				/* Hit "Cancel", but the map lacks a name */
-				view.renameMap(getString(R.string.tiledMap_dlg_renameMap_noName));
+				mapName = getString(R.string.tiledMap_dlg_renameMap_noName);
+				view.renameMap(mapName);
+				getSupportActionBar().setTitle(mapName);
 			}
 			/* End of rename map */
 		} else if (dialog == confirmMapSaveDialog) {
@@ -275,8 +289,8 @@ public class TiledMapActivity extends Activity implements DialogInterface.OnClic
 		return super.onContextItemSelected(item);
 	}
 
-	public boolean onCreateOptionsMenu(android.view.Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+	public boolean onCreateOptionsMenu(Menu menu) {
+		com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.tiledmap, menu);
 		/* Enable "Save to SD" only if the SD is available */
 		menu.findItem(R.id.tiledMap_menu_save).setEnabled(
@@ -362,8 +376,13 @@ public class TiledMapActivity extends Activity implements DialogInterface.OnClic
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 		switch (item.getItemId()) {
+			case android.R.id.home: {
+				/* Do not navigate back home, but show dialog which handles finish() w/ result. */
+				showDialog(C.DIALOG_CONFIRM_SAVE_MAP);
+				return true;
+			}
 			case R.id.tiledMap_menu_save: {
 				// TODO: factorize this.
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmm");

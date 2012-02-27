@@ -35,10 +35,10 @@
 	<string name="tab_info">About</string>
 	<string name="tab_changelog">Changelog</string>
 	<string name="tab_license">License</string>
-	<string name="about_info_version">version %1$s</string>
+	<string name="about_info_version">Version %1$s</string>
 	<string name="about_info_author">Author: Luca Santarelli</string>
 	<string name="about_info_homepage"></string>
-	<string name="about_info_extra">Multitouch Controller [http://code.google.com/p/android-multitouch-controller]\nNumberPicker [https://github.com/novak/numpicker-demo]\nColor Picker Preference [https://github.com/attenzione/android-ColorPickerPreference]</string>
+	<string name="about_info_extra">This app was born from an idea of Lorenzo \'Zerloon\' Calvi (the author of the first set of tiles) and benefits from other open source libraries. See the license page for further details.</string>
 	<string name="about_info_questions">If you have any questions, please contact the author by email or using the homepage.</string>
 	<string name="about_info_thanks">Thanks to every user who helped shape up this app!</string>
 	<!-- Settings -->
