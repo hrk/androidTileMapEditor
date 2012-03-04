@@ -10,6 +10,7 @@
 	<string name="home_dlg_new_rows">Rows</string>
 	<string name="home_dlg_new_columns">Columns</string>
 	<string name="home_dlg_new_canceled">Canceled creation of map</string>
+	<string name="home_dlg_new_oom">Not enough memory to draw a %1$d×%2$d map. Decrease either the rows or the columns.</string>
 	<string name="home_dlg_loading_maps">Loading maps. Please wait…</string>
 	<string name="home_grid_item_thumb_cd">Thumbnail</string>
 	<string name="home_grid_empty">There are no saved maps. Tap the button to create a new map</string>
@@ -35,11 +36,12 @@
 	<string name="tab_info">About</string>
 	<string name="tab_changelog">Changelog</string>
 	<string name="tab_license">License</string>
-	<string name="about_info_version">Version %1$s</string>
+	<string name="about_info_version">Version: %1$s</string>
 	<string name="about_info_author">Author: Luca Santarelli</string>
+	<string name="about_info_donate">Donate</string>
 	<string name="about_info_homepage"></string>
-	<string name="about_info_extra">This app was born from an idea of Lorenzo \'Zerloon\' Calvi (the author of the first set of tiles) and benefits from other open source libraries. See the license page for further details.</string>
-	<string name="about_info_questions">If you have any questions, please contact the author by email or using the homepage.</string>
+	<string name="about_info_extra">This app was born from an idea of Lorenzo Calvi (the author of the first set of tiles) and benefits from other open source libraries. See the license page for further details.</string>
+	<string name="about_info_questions">If you have any questions, please contact the author by email [luca.santarelli@gmail.com] or using the homepage.</string>
 	<string name="about_info_thanks">Thanks to every user who helped shape up this app!</string>
 	<!-- Settings -->
 	<string name="prefs_map_show_grid_summary_off">Grid will not be displayed</string>

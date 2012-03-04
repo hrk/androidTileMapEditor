@@ -7,7 +7,7 @@
    Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 [NumberPicker]
-Url: https://github.com/novak/numpicker-demo
+Url: https://github.com/mrn/numberpicker
 License: APACHE 2.0
 
 [Multitouch Controller]
@@ -21,3 +21,11 @@ License: APACHE 2.0
 [ActionBarSherlock]
 Url: http://www.actionbarsherlock.com
 License: APACHE 2.0
+
+   ========== Tiles =========
+   
+[Outdoor roads, City roads, Fantasy plains]
+Author: Lorenzo Calvi
+
+[Hedge Maze]
+Author: Peter Fitzpatrick

@@ -26,11 +26,13 @@ import java.io.InputStreamReader;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TextView;
 
@@ -97,9 +99,15 @@ public class AboutActivity extends SherlockActivity implements TabContentFactory
 				}
 				((TextView) v.findViewById(R.id.about_info_version)).setText(getResources().getString(
 						R.string.about_info_version, version));
-				Linkify.addLinks((TextView) v.findViewById(R.id.about_info_author), Linkify.ALL);
-				// Linkify.addLinks((TextView) v.findViewById(R.id.about_info_homepage), Linkify.ALL);
-				Linkify.addLinks((TextView) v.findViewById(R.id.about_info_extra), Linkify.ALL);
+				/* Donate button */
+				ImageView ivDonate = (ImageView) v.findViewById(R.id.donate_button);
+				ivDonate.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.paypal_donate_url)));
+						startActivity(i);
+					}
+				});
 
 				tabInfo = v;
 			}

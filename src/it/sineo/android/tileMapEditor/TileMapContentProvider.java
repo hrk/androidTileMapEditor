@@ -3,7 +3,6 @@ package it.sineo.android.tileMapEditor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
-import java.util.HashMap;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -22,7 +21,6 @@ public class TileMapContentProvider extends ContentProvider {
 	 */
 	private UriMatcher uriMatcher;
 	private DatabaseHelper dbHelper;
-	private HashMap<String, String> projectionMap;
 
 	@Override
 	public boolean onCreate() {
@@ -31,12 +29,6 @@ public class TileMapContentProvider extends ContentProvider {
 		uriMatcher.addURI(C.AUTHORITY_MAP, C.CONTENT_MAP_BASE + "/#", C.MATCH_MAP_ID);
 
 		dbHelper = new DatabaseHelper(getContext());
-
-		projectionMap = new HashMap<String, String>();
-		projectionMap.put(TileMap.Columns.KEY_ROWID, TileMap.Columns.KEY_ROWID);
-		projectionMap.put(TileMap.Columns.KEY_NAME, TileMap.Columns.KEY_NAME);
-		projectionMap.put(TileMap.Columns.KEY_JSON_DATA, TileMap.Columns.KEY_JSON_DATA);
-		projectionMap.put(TileMap.Columns.KEY_LAST_UPDATE, TileMap.Columns.KEY_LAST_UPDATE);
 
 		return true;
 	}

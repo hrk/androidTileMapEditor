@@ -8,14 +8,14 @@
 		android:id="@+id/home_grid"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:columnWidth="95dip"
+		android:columnWidth="@dimen/home_grid_columnWidth"
 		android:gravity="center"
-		android:horizontalSpacing="10dip"
+		android:horizontalSpacing="@dimen/home_grid_spacing"
 		android:numColumns="auto_fit"
 		android:padding="5dip"
 		android:smoothScrollbar="true"
 		android:stretchMode="columnWidth"
-		android:verticalSpacing="10dip" >
+		android:verticalSpacing="@dimen/home_grid_spacing" >
 	</GridView>
 
 </LinearLayout>

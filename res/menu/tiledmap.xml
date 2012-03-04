@@ -4,21 +4,22 @@
 	<item
 		android:id="@+id/tiledMap_menu_share"
 		android:icon="@android:drawable/ic_menu_share"
-		android:showAsAction="ifRoom"
+		android:showAsAction="ifRoom|withText"
 		android:title="@string/tiledMap_menu_share"/>
 	<item
 		android:id="@+id/tiledMap_menu_save"
 		android:icon="@android:drawable/ic_menu_save"
+		android:showAsAction="ifRoom|withText"
 		android:title="@string/tiledMap_menu_save"/>
 	<item
 		android:id="@+id/tiledMap_menu_rename"
 		android:icon="@android:drawable/ic_menu_edit"
-		android:showAsAction="ifRoom"
+		android:showAsAction="ifRoom|withText"
 		android:title="@string/tiledMap_menu_rename"/>
 	<item
 		android:id="@+id/global_menu_settings"
 		android:icon="@android:drawable/ic_menu_preferences"
-		android:showAsAction="ifRoom"
+		android:showAsAction="ifRoom|withText"
 		android:title="@string/global_menu_settings"/>
 	<item
 		android:id="@+id/global_menu_info"

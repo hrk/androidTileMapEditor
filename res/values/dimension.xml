@@ -5,5 +5,7 @@
 	<dimen name="tiledMap_tile">150dp</dimen>
 	<dimen name="home_grid_item_name">16dp</dimen>
 	<dimen name="home_grid_item_date">11dp</dimen>
+	<dimen name="home_grid_columnWidth">95dp</dimen>
+	<dimen name="home_grid_spacing">10dp</dimen>
 
 </resources>

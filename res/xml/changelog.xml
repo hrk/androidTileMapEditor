@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+	<release date="2012-03-02" version="1.2">
+		<change>New: cancel creation of new map if selected rows and columns would generate an image bigger than the available memory</change>
+		<change>New: reworked some interface elements for a better experience</change>
+		<change>New: added a Donate button (it helps your karma!)</change>
+		<change>New: added "Hedge Maze" tiles by Peter Fitzpatrick</change>
+		<change>Fix: error when long-pressing on an empty tile</change>
+	</release>
 	<release date="2012-02-26" version="1.1">
 		<change>New: support for saving and later editing of maps</change>
 		<change>New: settings screen (display grid while editing, display grid while exporting, background color for empty tiles, …)</change>
 		<change>New: display map thumbnail, name, and last update time in home screen</change>
 		<change>New: rename maps</change>
-		<change>New: Android 4.0 "IceCreamSandwich" look even on older devices!</change>
+		<change>New: up-to-date look and interface even on older devices!</change>
 	</release>
 	<release date="2012-02-12" version="1.0">
 		<change>Initial release</change>
 	</release>
 </changelog>
-

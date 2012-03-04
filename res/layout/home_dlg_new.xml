@@ -46,7 +46,7 @@
 			android:gravity="center_horizontal|center_vertical"
 			android:padding="5dip" >
 
-			<com.quietlycoding.android.picker.NumberPicker
+			<com.michaelnovakjr.numberpicker.NumberPicker
 				android:id="@+id/home_dlg_rows"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" />
@@ -57,7 +57,7 @@
 				android:layout_height="wrap_content"
 				android:text="@string/home_dlg_new_x" />
 
-			<com.quietlycoding.android.picker.NumberPicker
+			<com.michaelnovakjr.numberpicker.NumberPicker
 				android:id="@+id/home_dlg_columns"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" />

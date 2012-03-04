@@ -8,5 +8,6 @@
 		, _json_data TEXT NOT NULL
 		);</string>
 	<string name="home_dlg_new_x">×</string>
+	<string name="paypal_donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=62V9WK3Q282NA</string>
 
 </resources>

@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -43,7 +44,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.quietlycoding.android.picker.NumberPicker;
+import com.michaelnovakjr.numberpicker.NumberPicker;
 
 public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
 
@@ -84,10 +85,7 @@ public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cu
 				"_id", "_name", "_json_data", "_last_update",
 		};
 
-		int[] views = new int[] {
-				R.id.home_grid_item_name, R.id.home_grid_item_date
-		};
-		adapter = new MySimpleCursorAdapter(getApplicationContext(), R.layout.home_grid_item, null, cols, views, 0);
+		adapter = new MySimpleCursorAdapter(getApplicationContext(), R.layout.home_grid_item, null, cols, null, 0);
 
 		gvPreview.setAdapter(adapter);
 		gvPreview.setOnItemClickListener(this);
@@ -201,11 +199,22 @@ public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cu
 					public void onClick(DialogInterface dialog, int which) {
 						switch (which) {
 							case DialogInterface.BUTTON_POSITIVE: {
-								Intent tiledMapActivity = new Intent(HomeActivity.this, TiledMapActivity.class);
-								tiledMapActivity.putExtra(C.EXTRA_MAP_ROWS, npRows.getCurrent());
-								tiledMapActivity.putExtra(C.EXTRA_MAP_COLUMNS, npColumns.getCurrent());
-								startActivityForResult(tiledMapActivity, C.REQ_CODE_NEW_MAP);
-
+								/* Memory check */
+								int tileSize = getResources().getDimensionPixelSize(R.dimen.tiledMap_tile);
+								int columns = npColumns.getCurrent();
+								int rows = npRows.getCurrent();
+								try {
+									Bitmap.createBitmap(columns * tileSize, rows * tileSize, Bitmap.Config.ARGB_8888).recycle();
+									/* Ok, proceed */
+									Intent tiledMapActivity = new Intent(HomeActivity.this, TiledMapActivity.class);
+									tiledMapActivity.putExtra(C.EXTRA_MAP_ROWS, rows);
+									tiledMapActivity.putExtra(C.EXTRA_MAP_COLUMNS, columns);
+									startActivityForResult(tiledMapActivity, C.REQ_CODE_NEW_MAP);
+								} catch (OutOfMemoryError oomer) {
+									/* Not enough memory to draw this map */
+									Toast.makeText(HomeActivity.this, getString(R.string.home_dlg_new_oom, rows, columns),
+											Toast.LENGTH_LONG).show();
+								}
 								break;
 							}
 							case DialogInterface.BUTTON_NEGATIVE: {

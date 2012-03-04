@@ -456,7 +456,10 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 						if (longPressListener != null) {
 							acted = longPressListener.onLongPress(row, column, tileMap.tilePaths[row][column] == null);
 						}
-						super.performLongClick();
+						if (tileMap.tilePaths[row][column] != null) {
+							/* Only if the tile is not empty */
+							super.performLongClick();
+						}
 					} else {
 						Log.d(TAG, "short press detected");
 						if (shortPressListener != null) {

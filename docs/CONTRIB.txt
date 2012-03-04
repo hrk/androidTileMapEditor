@@ -1,17 +1,26 @@
 [NumberPicker]
-Url: https://github.com/novak/numpicker-demo
+Url: https://github.com/novak/numpicker-demo [OLD]
+Url: https://github.com/mrn/numberpicker
 License: APACHE 2.0
 
 [Multitouch Controller]
 Url: http://code.google.com/p/android-multitouch-controller/
 License: APACHE 2.0
 
-[android-color-picker]
-Url: http://code.google.com/p/android-color-picker/source/list
-License: APACHE 2.0
 
 [ColorPickerPreference]
 Url: https://github.com/attenzione/android-ColorPickerPreference
 License: APACHE 2.0
 
-http://code.google.com/p/devmil-android-color-picker/
+--Alternatives--
+[?]
+Url: http://code.google.com/p/devmil-android-color-picker/
+
+[android-color-picker]
+Url: http://code.google.com/p/android-color-picker/source/list
+License: APACHE 2.0
+
+--Tiles--
+Hedge Maze
+Author: Peter Fitzpatrick
+Url: http://mojobob.com/roleplay/props/mapping.html

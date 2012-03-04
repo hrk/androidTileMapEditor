@@ -96,9 +96,17 @@ public class TiledMapActivity extends FragmentActivity implements DialogInterfac
 		}
 
 		adapter = new ImageAdapter(TiledMapActivity.this);
-		adapter.addFromAssets("gfx/roads");
-		adapter.addFromAssets("gfx/roads_2");
-		adapter.addFromAssets("gfx/zerloon");
+		try {
+			String[] tileSets = getAssets().list("gfx");
+			for (String tileSet : tileSets) {
+				adapter.addFromAssets("gfx/" + tileSet);
+			}
+		} catch (IOException ioex) {
+			ioex.printStackTrace();
+		}
+		// adapter.addFromAssets("gfx/roads");
+		// adapter.addFromAssets("gfx/roads_2");
+		// adapter.addFromAssets("gfx/zerloon");
 
 		registerForContextMenu(view);
 	}
@@ -379,7 +387,10 @@ public class TiledMapActivity extends FragmentActivity implements DialogInterfac
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home: {
-				/* Do not navigate back home, but show dialog which handles finish() w/ result. */
+				/*
+				 * Do not navigate back home, but show dialog which handles finish() w/
+				 * result.
+				 */
 				showDialog(C.DIALOG_CONFIRM_SAVE_MAP);
 				return true;
 			}

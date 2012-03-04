@@ -8,8 +8,4 @@
 		<item name="android:textColorLink">@android:color/secondary_text_dark</item>
 	</style>
 
-	<style name="AboutText.AppName" parent="@style/AboutText">
-		<item name="android:textSize">16dip</item>
-	</style>
-
 </resources>
