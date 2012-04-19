@@ -28,6 +28,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,7 +52,21 @@ public class AboutActivity extends SherlockActivity implements TabContentFactory
 	private final static String TAG_CHANGELOG = "changelog";
 	private final static String TAG_LICENSE = "license";
 
+	private final static String SELECTED_TAB_INDEX = "selected_tab_index";
+
 	private View tabInfo, tabChangelog, tabLicense;
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(SELECTED_TAB_INDEX, 0));
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(SELECTED_TAB_INDEX, getSupportActionBar().getSelectedNavigationIndex());
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +90,13 @@ public class AboutActivity extends SherlockActivity implements TabContentFactory
 		tab.setText(R.string.tab_changelog);
 		tab.setTag(TAG_CHANGELOG);
 		tab.setTabListener(this);
-		bar.addTab(tab);
+		bar.addTab(tab, false);
 
 		tab = bar.newTab();
 		tab.setText(R.string.tab_license);
 		tab.setTag(TAG_LICENSE);
 		tab.setTabListener(this);
-		bar.addTab(tab);
+		bar.addTab(tab, false);
 	}
 
 	public View createTabContent(String tag) {
@@ -146,29 +161,26 @@ public class AboutActivity extends SherlockActivity implements TabContentFactory
 	}
 
 	@Override
-	public void onTabSelected(Tab tab) {
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		String tag = tab.getTag().toString();
 		setContentView(createTabContent(tag));
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab) {
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		// Do nothing.
 	}
 
 	@Override
-	public void onTabReselected(Tab tab) {
-		String tag = tab.getTag().toString();
-		setContentView(createTabContent(tag));
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// Do nothing.
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home: {
-				Intent intent = new Intent(this, HomeActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
+				finish();
 				return true;
 			}
 			default: {

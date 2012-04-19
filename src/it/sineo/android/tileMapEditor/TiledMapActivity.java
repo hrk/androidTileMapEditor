@@ -34,7 +34,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -47,9 +46,10 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 
-public class TiledMapActivity extends FragmentActivity implements DialogInterface.OnClickListener {
+public class TiledMapActivity extends SherlockFragmentActivity implements DialogInterface.OnClickListener {
 	private static final String TAG = "TiledMapActivity";
 
 	TiledMapView view = null;

@@ -25,9 +25,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -44,9 +44,11 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.michaelnovakjr.numberpicker.NumberPicker;
 
-public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
+public class HomeActivity extends SherlockFragmentActivity implements LoaderCallbacks<Cursor>,
+		AdapterView.OnItemClickListener {
 
 	private String TAG = HomeActivity.class.getSimpleName();
 
@@ -75,7 +77,12 @@ public class HomeActivity extends FragmentActivity implements LoaderCallbacks<Cu
 				showDialog(C.DIALOG_NEW_MAP);
 			}
 		});
-		addContentView(emptyGrid, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		@SuppressWarnings("deprecation")
+		int emptyGrid_layout_size = LayoutParams.FILL_PARENT;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+			emptyGrid_layout_size = LayoutParams.MATCH_PARENT;
+		}
+		addContentView(emptyGrid, new LayoutParams(emptyGrid_layout_size, emptyGrid_layout_size));
 		gvPreview.setEmptyView(emptyGrid);
 
 		/* Real grid view, with background loading */

@@ -39,6 +39,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -78,6 +79,8 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 	private Paint gridPaint;
 	private Paint debugPaint;
 	private Paint emptyTilePaint;
+	private RectF viewRect;
+	private RectF mapRect;
 
 	private boolean mustDrawGrid = C.DEFAULT_MAP_SHOW_GRID;
 	private boolean mustExportGrid = C.DEFAULT_EXPORT_SHOW_GRID;
@@ -103,6 +106,8 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 		emptyTilePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		emptyTilePaint.setColor(emptyTileColor);
 		emptyTilePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+		mapRect = new RectF(0, 0, 0, 0);
 
 		currentTouchPoint = new PointInfo();
 		fingerDownPoint = new PointInfo();
@@ -250,28 +255,6 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 		}
 		long t1 = System.currentTimeMillis();
 		Log.d(TAG, "time to draw tiles: " + (t1 - t0) + " ms");
-		if (mustExportGrid) {
-			t0 = System.currentTimeMillis();
-			/* Grid */
-			for (int rowIdx = 0; rowIdx <= tileMap.rows; rowIdx++) {
-				float x0 = 0;
-				float y0 = (rowIdx * tileSize);
-				float x1 = ((tileMap.columns * tileSize) - 1);
-				float y1 = (rowIdx * tileSize);
-				canvas.drawLine(x0, y0, x1, y1, gridPaint);
-			}
-			for (int colIdx = 0; colIdx <= tileMap.columns; colIdx++) {
-				float x0 = colIdx * tileSize;
-				float y0 = 0;
-				float x1 = colIdx * tileSize;
-				float y1 = ((tileMap.rows * tileSize) - 1);
-				canvas.drawLine(x0, y0, x1, y1, gridPaint);
-			}
-			t1 = System.currentTimeMillis();
-			Log.d(TAG, "time to draw grid: " + (t1 - t0) + " ms");
-		} else {
-			Log.d(TAG, "not drawing grid as per settings");
-		}
 		int width, height;
 		if (tileMap.rows > tileMap.columns) {
 			width = (int) ((tileSize * tileMap.columns) / tileMap.rows);
@@ -279,7 +262,6 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 		} else if (tileMap.rows < tileMap.columns) {
 			width = tileSize;
 			height = (int) ((tileSize * tileMap.rows) / tileMap.columns);
-			;
 		} else {
 			width = height = tileSize;
 		}
@@ -293,6 +275,12 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 		return baos.toByteArray();
 	}
 
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		viewRect = new RectF(0, 0, w, h);
+	}
+
 	/*
 	 * onDraw ========================================
 	 */
@@ -300,11 +288,13 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.save();
-		RectF viewRect = new RectF(0, 0, getWidth(), getHeight());
 
 		long t0 = System.currentTimeMillis();
-		RectF mapRect = new RectF(tileMap.xOff, tileMap.yOff, tileMap.xOff + tileSize * tileMap.columns * tileMap.scale,
-				tileMap.yOff + tileSize * tileMap.rows * tileMap.scale);
+
+		mapRect.left = tileMap.xOff;
+		mapRect.top = tileMap.yOff;
+		mapRect.right = tileMap.xOff + tileSize * tileMap.columns * tileMap.scale;
+		mapRect.bottom = tileMap.yOff + tileSize * tileMap.rows * tileMap.scale;
 		if (mapRect.intersect(viewRect)) {
 			canvas.drawRect(mapRect, emptyTilePaint);
 		}
@@ -387,7 +377,9 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 			}
 		} else {
 			/* This is an "alias" to remove the tile. */
-			tileMap.tileBitmaps[row][column].recycle();
+			if (tileMap.tileBitmaps[row][column] != null) {
+				tileMap.tileBitmaps[row][column].recycle();
+			}
 			tileMap.tileBitmaps[row][column] = null;
 			tileMap.tilePaths[row][column] = null;
 			tileMap.tileAngles[row][column] = 0;
@@ -439,13 +431,13 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 			// Last finger removed from screen
 			float dX = (touchPoint.getX() - fingerDownPoint.getX());
 			float dY = (touchPoint.getY() - fingerDownPoint.getY());
-			double distance = Math.sqrt(dX * dX + dY * dY);
+			float distance = FloatMath.sqrt(dX * dX + dY * dY);
 			if (distance < MIN_DISTANCE) {
 				/*
 				 * Calculate row+column. touchPoint(x,y) are relative to the screen.
 				 */
-				int column = (int) Math.floor(((touchPoint.getX() - tileMap.xOff) / tileMap.scale) / tileSize);
-				int row = (int) Math.floor(((touchPoint.getY() - tileMap.yOff) / tileMap.scale) / tileSize);
+				int column = (int) FloatMath.floor(((touchPoint.getX() - tileMap.xOff) / tileMap.scale) / tileSize);
+				int row = (int) FloatMath.floor(((touchPoint.getY() - tileMap.yOff) / tileMap.scale) / tileSize);
 				Log.d(TAG, "p=(" + touchPoint.getX() + "," + touchPoint.getY() + ") row=" + row + ", col=" + column);
 				Log.d(TAG,
 						MessageFormat.format("p=({0},{1}) row={2}, col={3}", touchPoint.getX(), touchPoint.getY(), row, column));
@@ -544,7 +536,7 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 				/*
 				 * Does the map need repainting?
 				 */
-				if (Math.sqrt(dx * dx + dy * dy) > MIN_DISTANCE_TO_INVALIDATE) {
+				if (FloatMath.sqrt(dx * dx + dy * dy) > MIN_DISTANCE_TO_INVALIDATE) {
 					obj.xOff += dx;
 					obj.yOff += dy;
 					invalidated = true;

@@ -58,7 +58,7 @@ public class ImageAdapter extends BaseAdapter {
 				for (String name : files) {
 					String fullpath = "assets:" + rootPath + "/" + name;
 					images.add(fullpath);
-					htImages.put(fullpath, new BitmapDrawable(ctx.getAssets().open(rootPath + "/" + name)));
+					htImages.put(fullpath, new BitmapDrawable(ctx.getResources(), ctx.getAssets().open(rootPath + "/" + name)));
 				}
 				notifyDataSetChanged();
 			} catch (IOException ioex) {
