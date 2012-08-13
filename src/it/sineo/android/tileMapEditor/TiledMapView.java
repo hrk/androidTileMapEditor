@@ -572,7 +572,7 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		/*
-		 * Act on preferences which change drawing behaviour:
+		 * Act on preferences which change drawing behavior:
 		 */
 		if (C.PREFS_MAP_SHOW_GRID.compareTo(key) == 0) {
 			mustDrawGrid = prefs.getBoolean(key, C.DEFAULT_MAP_SHOW_GRID);
