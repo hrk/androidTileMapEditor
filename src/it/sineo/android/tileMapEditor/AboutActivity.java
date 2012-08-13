@@ -17,33 +17,18 @@
 package it.sineo.android.tileMapEditor;
 
 import it.sineo.android.changelog.ChangelogFactory;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TabHost.TabContentFactory;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuItem;
-
-public class AboutActivity extends SherlockActivity implements TabContentFactory, TabListener {
+public class AboutActivity extends it.sineo.android.common.AboutActivity {
 
 	@SuppressWarnings("unused")
 	private final static String TAG = AboutActivity.class.getSimpleName();
@@ -52,62 +37,26 @@ public class AboutActivity extends SherlockActivity implements TabContentFactory
 	private final static String TAG_CHANGELOG = "changelog";
 	private final static String TAG_LICENSE = "license";
 
-	private final static String SELECTED_TAB_INDEX = "selected_tab_index";
-
-	private View tabInfo, tabChangelog, tabLicense;
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(SELECTED_TAB_INDEX, 0));
+	protected void addTabs() {
+		addTab(TAG_INFO, R.string.tab_info);
+		addTab(TAG_CHANGELOG, R.string.tab_changelog);
+		addTab(TAG_LICENSE, R.string.tab_license);
 	}
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(SELECTED_TAB_INDEX, getSupportActionBar().getSelectedNavigationIndex());
+	protected TabFragment instantiateTabFragment() {
+		return new TabFragment();
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.about);
+	public static class TabFragment extends it.sineo.android.common.TabFragment {
 
-		/* Action bar navigation */
-		ActionBar bar = getSupportActionBar();
-		bar.setHomeButtonEnabled(true);
-		bar.setDisplayHomeAsUpEnabled(true);
-
-		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		ActionBar.Tab tab = bar.newTab();
-		tab.setText(R.string.tab_info);
-		tab.setTag(TAG_INFO);
-		tab.setTabListener(this);
-		bar.addTab(tab, true);
-
-		tab = bar.newTab();
-		tab.setText(R.string.tab_changelog);
-		tab.setTag(TAG_CHANGELOG);
-		tab.setTabListener(this);
-		bar.addTab(tab, false);
-
-		tab = bar.newTab();
-		tab.setText(R.string.tab_license);
-		tab.setTag(TAG_LICENSE);
-		tab.setTabListener(this);
-		bar.addTab(tab, false);
-	}
-
-	public View createTabContent(String tag) {
-		if (TAG_INFO.equals(tag)) {
-			if (tabInfo == null) {
-				LayoutInflater li = LayoutInflater.from(this);
-				View v = li.inflate(R.layout.about_info, null);
+		public View createTabContent(String tag, LayoutInflater inflater) {
+			Context ctx = inflater.getContext();
+			if (TAG_INFO.equals(tag)) {
+				View v = inflater.inflate(R.layout.about_info, null, false);
 
 				String version = "?";
 				try {
-					PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+					PackageInfo info = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
 					version = info.versionName;
 				} catch (PackageManager.NameNotFoundException pmnnfex) {
 					pmnnfex.printStackTrace();
@@ -124,68 +73,14 @@ public class AboutActivity extends SherlockActivity implements TabContentFactory
 					}
 				});
 
-				tabInfo = v;
+				return v;
+			} else if (TAG_CHANGELOG.equals(tag)) {
+				return ChangelogFactory.inflate(ctx, R.xml.changelog);
+			} else if (TAG_LICENSE.equals(tag)) {
+				return createLicenseView(R.raw.license, inflater);
 			}
-			return tabInfo;
-		} else if (TAG_CHANGELOG.equals(tag)) {
-			if (tabChangelog == null) {
-				tabChangelog = ChangelogFactory.inflate(this, R.xml.changelog);
-			}
-			return tabChangelog;
-		} else if (TAG_LICENSE.equals(tag)) {
-			if (tabLicense == null) {
-				String text = "";
-				try {
-					InputStream is = getResources().openRawResource(R.raw.license);
-					BufferedReader br = new BufferedReader(new InputStreamReader(is), 4096);
-					String line = null;
-					while ((line = br.readLine()) != null) {
-						text += line + "\r\n";
-					}
-					br.close();
-					is.close();
-				} catch (IOException ioex) {
-					text = ioex.getLocalizedMessage();
-				}
-				LayoutInflater li = LayoutInflater.from(this);
-				View v = li.inflate(R.layout.about_license, null);
-				TextView license = (TextView) v.findViewById(R.id.about_license);
-				license.setText(text);
-				Linkify.addLinks(license, Linkify.WEB_URLS);
-				tabLicense = v;
-			}
-			return tabLicense;
-		}
-		Log.e(getClass().getName(), "unknown tag: " + tag);
-		return null;
-	}
-
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		String tag = tab.getTag().toString();
-		setContentView(createTabContent(tag));
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// Do nothing.
-	}
-
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// Do nothing.
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home: {
-				finish();
-				return true;
-			}
-			default: {
-				return super.onOptionsItemSelected(item);
-			}
+			Log.e(getClass().getName(), "unknown tag: " + tag);
+			return null;
 		}
 	}
 }

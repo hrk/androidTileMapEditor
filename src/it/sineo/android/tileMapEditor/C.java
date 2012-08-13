@@ -20,7 +20,7 @@ import android.content.ContentResolver;
 import android.graphics.Color;
 import android.net.Uri;
 
-public class C {
+public class C extends it.sineo.android.common.C {
 	public final static boolean DEVELOPER_MODE = false;
 
 	public final static String EXTERNAL_DIR = "TiledMapEditor";
