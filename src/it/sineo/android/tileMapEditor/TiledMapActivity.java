@@ -30,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -109,6 +110,18 @@ public class TiledMapActivity extends SherlockFragmentActivity implements Dialog
 		// adapter.addFromAssets("gfx/zerloon");
 
 		registerForContextMenu(view);
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (adapter != null && adapter.htImages != null) {
+			for (BitmapDrawable bd : adapter.htImages.values()) {
+				bd.getBitmap().recycle();
+			}
+			adapter.htImages.clear();
+			adapter.images.clear();
+		}
+		super.onDestroy();
 	}
 
 	@Override
