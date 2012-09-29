@@ -18,8 +18,9 @@ package it.sineo.android.tileMapEditor;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import android.content.Context;
@@ -38,13 +39,13 @@ public class ImageAdapter extends BaseAdapter {
 
 	Context ctx;
 	List<String> images;
-	Hashtable<String /* path */, BitmapDrawable> htImages;
+	Map<String /* path */, BitmapDrawable> htImages;
 	Random rand;
 
 	public ImageAdapter(Context ctx) {
 		this.ctx = ctx;
 		this.images = new ArrayList<String>();
-		this.htImages = new Hashtable<String, BitmapDrawable>();
+		this.htImages = new HashMap<String, BitmapDrawable>();
 		this.rand = new Random(System.currentTimeMillis());
 		Log.d(TAG, "initialized random generator");
 	}

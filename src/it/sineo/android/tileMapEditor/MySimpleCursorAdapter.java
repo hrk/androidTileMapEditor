@@ -18,7 +18,8 @@ package it.sineo.android.tileMapEditor;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -47,8 +48,8 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter {
 
 	private Context ctx;
 	private LayoutInflater inflater;
-	private Hashtable<Long /* id */, Drawable /* thumbnail */> cache = new Hashtable<Long, Drawable>();
-	private Hashtable<Long /* id */, Long /* lastUpdate */> cacheValidity = new Hashtable<Long, Long>();
+	private Map<Long /* id */, Drawable /* thumbnail */> cache = new HashMap<Long, Drawable>();
+	private Map<Long /* id */, Long /* lastUpdate */> cacheValidity = new HashMap<Long, Long>();
 
 	private static class ViewHolder {
 		TextView tvName, tvDate;
