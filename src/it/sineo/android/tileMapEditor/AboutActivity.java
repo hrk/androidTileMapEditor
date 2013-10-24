@@ -17,6 +17,7 @@
 package it.sineo.android.tileMapEditor;
 
 import it.sineo.android.changelog.ChangelogFactory;
+import it.sineo.android.common.Theme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -45,6 +46,10 @@ public class AboutActivity extends it.sineo.android.common.AboutActivity {
 
 	protected TabFragment instantiateTabFragment() {
 		return new TabFragment();
+	}
+
+	protected void applyTheme(Context ctx) {
+		Theme.applyTo(ctx);
 	}
 
 	public static class TabFragment extends it.sineo.android.common.TabFragment {
