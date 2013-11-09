@@ -15,7 +15,7 @@
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
 		android:theme="@style/Theme.Sherlock.ForceOverflow"
-		android:uiOptions="splitActionBarWhenNarrow" >
+		 >
 		<activity
 			android:name=".HomeActivity"
 			android:icon="@drawable/ic_launcher"
@@ -27,6 +27,7 @@
 			</intent-filter>
 		</activity>
 		<activity
+		    android:uiOptions="splitActionBarWhenNarrow"
 			android:name=".TiledMapActivity"
 			android:exported="false" >
 		</activity>

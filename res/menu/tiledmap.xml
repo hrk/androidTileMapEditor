@@ -3,27 +3,27 @@
 
 	<item
 		android:id="@+id/tiledMap_menu_share"
-		android:icon="@android:drawable/ic_menu_share"
+		android:icon="@drawable/ic_action_share"
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/tiledMap_menu_share"/>
 	<item
 		android:id="@+id/tiledMap_menu_save"
-		android:icon="@android:drawable/ic_menu_save"
+		android:icon="@drawable/ic_action_save"
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/tiledMap_menu_save"/>
 	<item
 		android:id="@+id/tiledMap_menu_rename"
-		android:icon="@android:drawable/ic_menu_edit"
+		android:icon="@drawable/ic_action_edit"
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/tiledMap_menu_rename"/>
 	<item
 		android:id="@+id/global_menu_settings"
-		android:icon="@android:drawable/ic_menu_preferences"
+		android:icon="@drawable/ic_action_settings"
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/global_menu_settings"/>
 	<item
 		android:id="@+id/global_menu_info"
-		android:icon="@android:drawable/ic_menu_info_details"
+		android:icon="@drawable/ic_action_about"
 		android:showAsAction="never"
 		android:title="@string/global_menu_info"/>
 

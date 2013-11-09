@@ -3,12 +3,12 @@
 
 	<item
 		android:id="@+id/home_ctx_menu_delete"
-		android:icon="@android:drawable/ic_menu_delete"
+		android:icon="@drawable/ic_action_trash"
 		android:title="@string/home_ctx_menu_delete"/>
 	<!--
 	<item
 		android:id="@+id/home_ctx_menu_edit"
-		android:icon="@android:drawable/ic_menu_edit"
+		android:icon="@drawable/ic_action_edit"
 		android:title="@string/home_ctx_menu_edit"/>
 	-->
 
