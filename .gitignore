@@ -2,3 +2,6 @@ gen/
 bin/
 dist/
 local.properties
+/.settings/
+/.classpath
+/.project
