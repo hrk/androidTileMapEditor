@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.metalev.multitouch.controller.MultiTouchController;
 import org.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas;
@@ -325,7 +327,12 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 						m.preScale(tileMap.scale, tileMap.scale);
 						Bitmap scaled = Bitmap.createBitmap(tileMap.tileBitmaps[rowIdx][colIdx], 0, 0, tileSize, tileSize, m, true);
 						canvas.drawBitmap(scaled, left, top, debugPaint);
-						scaled.recycle();
+						/*
+						 * Commenting out recycle() as some devices find it too
+						 * "aggressive". I'll need to learn how to properly display bitmaps.
+						 * :(
+						 */
+						// scaled.recycle();
 					} // end-if: tile does not intersect view area
 				}
 			}
