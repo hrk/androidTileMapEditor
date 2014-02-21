@@ -60,7 +60,7 @@ public class TiledMapActivity extends SherlockFragmentActivity implements Dialog
 	/*
 	 * Dialogs
 	 */
-	private Dialog renameDialog, confirmMapSaveDialog;
+	private Dialog renameDialog, confirmMapSaveDialog, tileSelectionDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -249,6 +249,8 @@ public class TiledMapActivity extends SherlockFragmentActivity implements Dialog
 		}
 	}
 
+	private int shortPressedRow = -1, shortPressedColumn = -1;
+
 	private TiledMapView.OnShortPressListener shortPressListener = new TiledMapView.OnShortPressListener() {
 		@Override
 		public boolean onShortPress(final int row, final int column, final boolean isEmpty) {
@@ -263,15 +265,14 @@ public class TiledMapActivity extends SherlockFragmentActivity implements Dialog
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(TiledMapActivity.this);
 				builder.setView(grid);
-				AlertDialog dialog = builder.create();
-				listener.setDialog(dialog);
+				tileSelectionDialog = builder.create();
+				listener.setDialog(tileSelectionDialog);
 				listener.setView(view);
-				listener.setRow(row);
-				listener.setColumn(column);
-				dialog.show();
+				listener.setRow(shortPressedRow = row);
+				listener.setColumn(shortPressedColumn = column);
+				listener.setActivity(TiledMapActivity.this);
+				tileSelectionDialog.show();
 			} else {
-				// Toast.makeText(getApplicationContext(),
-				// "tile is not empty, rotate it", Toast.LENGTH_SHORT).show();
 				view.rotateTile(row, column);
 			}
 			return true;
@@ -450,6 +451,26 @@ public class TiledMapActivity extends SherlockFragmentActivity implements Dialog
 					File destFile = new File(destDirectory, "TiledMap_shared.png");
 					destFile.delete();
 				}
+				break;
+			}
+			case C.REQ_CODE_SELECT_EXTERNAL_TILE: {
+				if (Activity.RESULT_OK == resultCode) {
+					Uri selectedImage = data.getData();
+					view.setTile(shortPressedRow, shortPressedColumn, selectedImage.toString());
+				} else if (Activity.RESULT_CANCELED == resultCode) {
+					/* Canceled selection, nothing specific to do. */
+				}
+				/*
+				 * Here (and not in the RESULT_OK) means that we hide the dialog even on
+				 * cancel.
+				 */
+				if (tileSelectionDialog != null && tileSelectionDialog.isShowing()) {
+					tileSelectionDialog.dismiss();
+				}
+				/*
+				 * NOTE: these two values are reset only for external tiles.
+				 */
+				shortPressedRow = shortPressedColumn = -1;
 				break;
 			}
 		}

@@ -17,8 +17,11 @@
 package it.sineo.android.tileMapEditor;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.text.MessageFormat;
 
 import org.metalev.multitouch.controller.MultiTouchController;
@@ -36,6 +39,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -364,6 +368,9 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 				if (path.startsWith("assets:")) {
 					// 7 = "assets:".length();
 					is = context.getAssets().open(path.substring(7));
+				} else if (path.startsWith("content:")) {
+					Uri uri = Uri.parse(path);
+					is = context.getContentResolver().openInputStream(uri);
 				}
 				Bitmap source = BitmapFactory.decodeStream(is);
 				Bitmap scaled = Bitmap.createScaledBitmap(source, tileSize, tileSize, true);
@@ -373,7 +380,13 @@ public class TiledMapView extends View implements MultiTouchObjectCanvas<TileMap
 				tileMap.tileMatrices[row][column] = new Matrix();
 				source.recycle();
 			} catch (IOException ioex) {
-				Toast.makeText(context, "Unable to load tile " + path, Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, context.getResources().getString(R.string.tiledMap_error_tilenotfound, path),
+						Toast.LENGTH_LONG).show();
+				/* And reset the tile as if it was empty. */
+				tileMap.tileBitmaps[row][column] = null;
+				tileMap.tilePaths[row][column] = null;
+				tileMap.tileAngles[row][column] = 0;
+				tileMap.tileMatrices[row][column] = null;
 			}
 		} else {
 			/* This is an "alias" to remove the tile. */

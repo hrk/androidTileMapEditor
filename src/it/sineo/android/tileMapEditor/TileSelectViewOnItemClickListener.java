@@ -16,26 +16,34 @@
 
 package it.sineo.android.tileMapEditor;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
 public class TileSelectViewOnItemClickListener implements AdapterView.OnItemClickListener {
 
-	private AlertDialog dialog;
+	private Dialog dialog;
 	private TiledMapView view;
+	private TiledMapActivity activity;
 	private int row;
 	private int column;
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		String path = (String) ((ImageAdapter) parent.getAdapter()).getItem(position);
-		view.setTile(row, column, path);
-		dialog.dismiss();
+		if ("sdcard".equals(path)) {
+			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+			photoPickerIntent.setType("image/*");
+			activity.startActivityForResult(photoPickerIntent, C.REQ_CODE_SELECT_EXTERNAL_TILE);
+		} else {
+			view.setTile(row, column, path);
+			dialog.dismiss();
+		}
 	}
 
 	/* get/set */
-	public void setDialog(AlertDialog dialog) {
+	public void setDialog(Dialog dialog) {
 		this.dialog = dialog;
 	}
 
@@ -49,5 +57,9 @@ public class TileSelectViewOnItemClickListener implements AdapterView.OnItemClic
 
 	public void setColumn(int column) {
 		this.column = column;
+	}
+
+	public void setActivity(TiledMapActivity activity) {
+		this.activity = activity;
 	}
 }

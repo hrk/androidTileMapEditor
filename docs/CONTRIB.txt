@@ -24,3 +24,8 @@ License: APACHE 2.0
 Hedge Maze
 Author: Peter Fitzpatrick
 Url: http://mojobob.com/roleplay/props/mapping.html
+
+
+SD Memory: http://www.openclipart.org/detail/4089/sd-card-by-webmichl
++: http://www.openclipart.org/detail/185323/dev-plus-by-dev12345678-185323
+

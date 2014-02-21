@@ -29,6 +29,7 @@ public class C extends it.sineo.android.common.C {
 	public final static int REQ_CODE_SHARE = 1;
 	public final static int REQ_CODE_NEW_MAP = 2;
 	public final static int REQ_CODE_EDIT_MAP = 3;
+	public final static int REQ_CODE_SELECT_EXTERNAL_TILE = 4;
 
 	public final static String EXTRA_MAP_ROWS = C.class.getPackage().getName() + ".extra.map_rows";
 	public final static String EXTRA_MAP_COLUMNS = C.class.getPackage().getName() + ".extra.map_columns";

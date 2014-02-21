@@ -32,6 +32,7 @@
 	<string name="tiledMap_dlg_renameMap_message">Enter a name for the map, or leave it as it is.</string>
 	<string name="tiledMap_dlg_renameMap_noName">Unnamed map</string>
 	<string name="tiledMap_ctx_menu_delete">Remove tile</string>
+	<string name="tiledMap_error_tilenotfound">Unable to load tile %1$s.</string>
 	<!-- About screen -->
 	<string name="tab_info">About</string>
 	<string name="tab_changelog">Changelog</string>

@@ -74,11 +74,15 @@ public class ImageAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return images.size();
+		/* +1 is the sdcard source */
+		return images.size() + 1;
 	}
 
 	@Override
 	public Object getItem(int position) {
+		if (position == images.size()) {
+			return "sdcard";
+		}
 		String path = images.get(position);
 		if (path.startsWith("random_")) {
 			/* 7 = "random_".length() */
@@ -108,19 +112,22 @@ public class ImageAdapter extends BaseAdapter {
 		} else {
 			imageView = (ImageView) convertView;
 		}
-		String path = images.get(position);
-		if (path.startsWith("random_")) {
-			/* Load "?" resource and merge it with the next resource */
-			// imageView.setImageResource(R.drawable.ic_random);
-			Drawable[] layers = new Drawable[2];
-			// try {
-			String auxPath = (String) getItem(position + 1);
-			layers[0] = htImages.get(auxPath);
-			layers[1] = ctx.getResources().getDrawable(R.drawable.ic_random);
-			LayerDrawable layered = new LayerDrawable(layers);
-			imageView.setImageDrawable(layered);
+		if (position == images.size()) {
+			/* External SD Card input */
+			imageView.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_source_sdcard));
 		} else {
-			imageView.setImageDrawable(htImages.get(path));
+			String path = images.get(position);
+			if (path.startsWith("random_")) {
+				/* Load "?" resource and merge it with the next resource */
+				Drawable[] layers = new Drawable[2];
+				String auxPath = (String) getItem(position + 1);
+				layers[0] = htImages.get(auxPath);
+				layers[1] = ctx.getResources().getDrawable(R.drawable.ic_random);
+				LayerDrawable layered = new LayerDrawable(layers);
+				imageView.setImageDrawable(layered);
+			} else {
+				imageView.setImageDrawable(htImages.get(path));
+			}
 		}
 		return imageView;
 	}
