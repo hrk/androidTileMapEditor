@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+	<release date="2014-02-21" version="1.3">
+		<change>New: ability to use your own tiles from the sdcard/internal memory</change>
+		<change>Fix: many bugs and crashes (please, send a report if you get a crash!)</change>
+	</release>
 	<release date="2012-03-02" version="1.2">
 		<change>New: cancel creation of new map if selected rows and columns would generate an image bigger than the available memory</change>
 		<change>New: reworked some interface elements for a better experience</change>
